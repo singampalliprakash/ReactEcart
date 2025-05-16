@@ -1,0 +1,68 @@
+.signup-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 40px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  font-family: 'Segoe UI', sans-serif;
+  animation: fadeIn 1s ease-in;
+  text-align: center;
+}
+
+.signup-title {
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.signup-input {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.signup-input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 8px #3498db80;
+  background-color: #f0f8ff;
+}
+
+.signup-button {
+  padding: 12px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.signup-button:hover {
+  background-color: #1e8449;
+  transform: scale(1.05);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  } 
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

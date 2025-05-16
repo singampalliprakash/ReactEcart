@@ -1,0 +1,153 @@
+/* Orders.css */
+
+/* Main Container */
+.orders-container {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #f4f7fb;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.orders-container h2 {
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+/* Order Card */
+.order-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e4e8f1;
+}
+
+.order-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+}
+
+.order-id,
+.order-datetime,
+.order-amount {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Removed ::after for orange line */
+.order-id i,
+.order-datetime i,
+.order-amount i {
+  color: #e74c3c;
+  font-size: 1.25rem;
+}
+
+/* Items list - One by one */
+.order-items {
+  display: block;
+  margin-top: 16px;
+  padding-top: 20px;
+}
+
+.order-item {
+  background: #f9fafb;
+  padding: 18px 20px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 1rem;
+  color: #2c3e50;
+  position: relative;
+  transition: background-color 0.3s, transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.order-item:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-2px);
+}
+
+.order-item i {
+  color: #27ae60;
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 1.2rem;
+}
+
+/* Item Name */
+.item-name {
+  font-weight: 600;
+  color: #2d3436;
+  font-size: 1.1rem;
+}
+
+/* Item Meta (Qty and Price) */
+.item-meta {
+  font-size: 1rem;
+  color: #7f8c8d;
+}
+
+/* No Orders Section */
+.no-orders {
+  text-align: center;
+  padding: 70px 40px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.no-orders h2 {
+  font-size: 2rem;
+  color: #bdc3c7;
+}
+
+.no-orders p {
+  font-size: 1.1rem;
+  color: #95a5a6;
+  margin-top: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .orders-container {
+    padding: 16px;
+  }
+
+  .orders-container h2 {
+    font-size: 1.8rem;
+  }
+
+  .order-card {
+    padding: 20px;
+  }
+
+  .order-id,
+  .order-datetime,
+  .order-amount {
+    font-size: 0.95rem;
+  }
+
+  .order-item {
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+
+  .item-name {
+    font-size: 1rem;
+  }
+
+  .item-meta {
+    font-size: 0.9rem;
+  }
+}

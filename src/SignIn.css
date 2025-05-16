@@ -1,0 +1,95 @@
+/* Base container with subtle animation */
+.signin-container {
+  width: 100%;
+  max-width: 600px; /* increased from 420px */
+  margin: 100px auto;
+  padding: 50px 40px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+  animation: fadeIn 1s ease-in;
+}
+
+
+/* Title styling */
+.signin-title {
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #34495e;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Form layout */
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Input fields with focus animation */
+.signin-input {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.signin-input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 8px #3498db80;
+  background-color: #f0f8ff;
+}
+
+/* Animated button */
+.signin-button {
+  padding: 12px;
+  background-color: #3498db;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.signin-button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+/* Footer text */
+.signin-footer {
+  margin-top: 25px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Link with effect */
+.signup-link {
+  color: #e67e22;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.signup-link:hover {
+  color: #d35400;
+  text-decoration: underline;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  } 
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
