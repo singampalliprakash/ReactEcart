@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './npm run buildeg.css';
+import './Veg.css';
 import './App.css';
 import { AddToCart } from './store';
 
