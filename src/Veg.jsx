@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import './Veg.css';
 import './App.css';
 import { AddToCart } from './store';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const priceRanges = [
   { value: "1 - 100", min: 1, max: 100 },
@@ -51,35 +53,15 @@ const Veg = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
 
-  const vegListItems = currentItems.map((product) => (
-    <div key={product.name} className="product-card">
-      <img src={product.image} alt={product.name} className="product-image" />
-      <h3>{product.name}</h3>
-      <p>Price: ₹{product.price}</p>
-      <button
-        className="add-to-cart-btn"
-        onClick={() => dispatch(AddToCart(product))}
-      >
-        Add to Cart
-      </button>
-    </div>
-  ));
-
-  const paginationButtons = Array.from({ length: totalPages }, (_, index) => (
-    <button
-      key={index + 1}
-      onClick={() => setCurrentPage(index + 1)}
-      style={{
-        margin: '0 5px',
-        fontWeight: currentPage === index + 1 ? 'bold' : 'normal',
-      }}
-    >
-      {index + 1}
-    </button>
-  ));
+  const handleAddToCart = (product) => {
+    dispatch(AddToCart(product));
+    toast.success(`${product.name} added to cart!`);
+  };
 
   return (
     <>
+      <ToastContainer position="top-center" autoClose={1500} />
+
       <h1
         style={{
           textAlign: 'center',
@@ -92,9 +74,9 @@ const Veg = () => {
         Fresh Vegetables
       </h1>
 
-      {/* Filter Section in a Single Line */}
-      <div className="price-filter-container" style={{ textAlign: 'center' }}>
-        <h2>Filter by Price: </h2>
+      {/* Filter Section */}
+      <div className="price-filter-container" style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <h2>Filter by Price:</h2>
         <div style={{ display: 'inline-flex', gap: '10px' }}>
           {priceRanges.map(range => (
             <label key={range.value} style={{ fontSize: '1rem' }}>
@@ -102,14 +84,13 @@ const Veg = () => {
                 type="checkbox"
                 checked={selectedRanges.includes(range.value)}
                 onChange={() => handleCheckboxChange(range.value)}
-                style={{ marginRight: '5px' }}
+                style={{ marginRight: '5px', transform: 'scale(1.2)' }}
               />
               {range.value}
             </label>
           ))}
         </div>
 
-        {/* Clear All Button */}
         {selectedRanges.length > 0 && (
           <button
             onClick={handleClearAll}
@@ -120,6 +101,7 @@ const Veg = () => {
               padding: '6px 12px',
               border: 'none',
               borderRadius: '5px',
+              cursor: 'pointer',
             }}
           >
             Clear All
@@ -128,7 +110,18 @@ const Veg = () => {
       </div>
 
       {/* Product Cards */}
-      <div className="products-container">{vegListItems}</div>
+      <div className="products-container">
+        {currentItems.map((product) => (
+          <div key={product.name} className="product-card">
+            <img src={product.image} alt={product.name} className="product-image" />
+            <h3>{product.name}</h3>
+            <p>Price: ₹{product.price}</p>
+            <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
 
       {/* Pagination */}
       <div className="pagination">
@@ -140,7 +133,15 @@ const Veg = () => {
           Previous
         </button>
 
-        {paginationButtons}
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => setCurrentPage(index + 1)}
+            className={`pagination-btn ${currentPage === index + 1 ? 'active' : ''}`}
+          >
+            {index + 1}
+          </button>
+        ))}
 
         <button
           onClick={() => setCurrentPage(currentPage + 1)}

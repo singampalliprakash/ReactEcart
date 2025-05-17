@@ -1,23 +1,70 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify'; // Toastify import
+import 'react-toastify/dist/ReactToastify.css';          // Toastify styles
 import './NonVeg.css';
 import './App.css';
 import { AddToCart } from './store';
+
+const priceRanges = [
+  { value: "1 - 100", min: 1, max: 100 },
+  { value: "101 - 200", min: 101, max: 200 },
+  { value: "201 - 350", min: 201, max: 350 },
+  { value: "351 - 600", min: 351, max: 600 },
+];
 
 const NonVegProducts = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.NonVeg);
 
-  const [maxPrice, setMaxPrice] = useState(900);
+  const [selectedRanges, setSelectedRanges] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
-  const handlePriceChange = (e) => {
-    setMaxPrice(Number(e.target.value));
+  const handleCheckboxChange = (value) => {
+    if (selectedRanges.includes(value)) {
+      setSelectedRanges(selectedRanges.filter(item => item !== value));
+    } else {
+      setSelectedRanges([...selectedRanges, value]);
+    }
     setCurrentPage(1);
   };
 
-  const filteredProducts = products.filter(product => product.price <= maxPrice);
+  const handleClearAll = () => {
+    setSelectedRanges([]);
+    setCurrentPage(1);
+  };
+
+  const handleAddToCart = (product) => {
+    dispatch(AddToCart(product));
+    toast.success(`${product.name} added to cart!`, {
+      position: 'top-center',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      style: {
+        background: '#ffffff',
+        color: '#000000',
+        fontWeight: '500',
+        border: '1px solid #ccc',
+        boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+      },
+    });
+  };
+
+  const activeRanges = priceRanges.filter(range =>
+    selectedRanges.includes(range.value)
+  );
+
+  const filteredProducts = selectedRanges.length === 0
+    ? products
+    : products.filter(product =>
+        activeRanges.some(range =>
+          product.price >= range.min && product.price <= range.max
+        )
+      );
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -31,7 +78,7 @@ const NonVegProducts = () => {
       <p>Price: ₹{product.price}</p>
       <button
         className="add-to-cart-btn"
-        onClick={() => dispatch(AddToCart(product))}
+        onClick={() => handleAddToCart(product)}
       >
         Add to Cart
       </button>
@@ -53,6 +100,8 @@ const NonVegProducts = () => {
 
   return (
     <>
+      <ToastContainer /> {/* Toast Container */}
+
       <h1
         style={{
           textAlign: 'center',
@@ -65,25 +114,39 @@ const NonVegProducts = () => {
         Non-Veg Items
       </h1>
 
-      {/* Price Slider */}
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <h3 style={{ fontSize: '1.2rem', marginBottom: '10px' }}>Filter by Price</h3>
-
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-          <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>₹1</span>
-
-          <input
-            type="range"
-            min="1"
-            max="600"
-            step="1"
-            value={maxPrice}
-            onChange={handlePriceChange}
-            style={{ width: '50%' }}
-          />
-
-          <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>₹{maxPrice}</span>
+      {/* Filter Section */}
+      <div className="price-filter-container" style={{ textAlign: 'center' }}>
+        <h2>Filter by Price: </h2>
+        <div style={{ display: 'inline-flex', gap: '10px' }}>
+          {priceRanges.map(range => (
+            <label key={range.value} style={{ fontSize: '1rem' }}>
+              <input
+                type="checkbox"
+                checked={selectedRanges.includes(range.value)}
+                onChange={() => handleCheckboxChange(range.value)}
+                style={{ marginRight: '5px' }}
+              />
+              {range.value}
+            </label>
+          ))}
         </div>
+
+        {selectedRanges.length > 0 && (
+          <button
+            onClick={handleClearAll}
+            style={{
+              marginLeft: '20px',
+              backgroundColor: '#dc3545',
+              color: '#fff',
+              padding: '6px 12px',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+            }}
+          >
+            Clear All
+          </button>
+        )}
       </div>
 
       {/* Product Cards */}
@@ -94,6 +157,7 @@ const NonVegProducts = () => {
         <button
           onClick={() => setCurrentPage(currentPage - 1)}
           disabled={currentPage === 1}
+          className="pagination-btn"
         >
           Previous
         </button>
@@ -103,6 +167,7 @@ const NonVegProducts = () => {
         <button
           onClick={() => setCurrentPage(currentPage + 1)}
           disabled={currentPage === totalPages}
+          className="pagination-btn"
         >
           Next
         </button>
